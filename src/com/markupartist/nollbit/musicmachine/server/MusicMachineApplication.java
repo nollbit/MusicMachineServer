@@ -72,9 +72,14 @@ public class MusicMachineApplication {
                     password = args[i++];
                 else
                     System.err.println("-p requires a password");
-            } else if (arg.equals("-p")) {
+            } else if (arg.equals("-P")) {
                 if (i < args.length)
-                    port = Integer.parseInt(args[i++]);
+                    try {
+                        port = Integer.parseInt(args[i++]);
+                    } catch (NumberFormatException e) {
+                        System.err.println(String.format(
+                                "Port must be numeric, using default port %s instead.", port));
+                    }
             }
         }
 
@@ -82,7 +87,6 @@ public class MusicMachineApplication {
             System.err.println("Usage: -u <username> -p <password> [-P <port>]");
             System.exit(0);
         }
-
 
         /* Login to spotify */
         try {
@@ -114,6 +118,7 @@ public class MusicMachineApplication {
 
         /* Start HTTP server. */
         server.start();
+        System.out.println("Server started on port " + port);
 
         playlist.setListener(new MusicMachinePlaylist.PlaylistPlayableListener() {
 
