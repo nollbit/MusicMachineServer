@@ -42,6 +42,8 @@ public class PlaylistHandler extends MusicMachineHandler {
             throw new InternalServerErrorException("Timeout occurred while getting track information");
         } catch (MusicMachinePlaylist.PlaylistFullException e) {
             throw new ConflictException("Playlist full");
+        } catch (IllegalArgumentException e) {
+            return e.toString();
         }
 
         return "ok";
