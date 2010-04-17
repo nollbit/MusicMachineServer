@@ -41,7 +41,7 @@ public class MusicMachinePlaylist {
         tracks.add(track);
 
         if (tracks.size() == 1 && listener != null) {
-            listener.trackAddedToEmptyPlaylist(this);
+            listener.trackAddedToEmptyPlaylist(track);
         }
 
         return true;
@@ -62,11 +62,11 @@ public class MusicMachinePlaylist {
     public MMTrack popTrack() throws PlaylistEmptyException {
         try {
             return tracks.remove(0);
-        } catch(IndexOutOfBoundsException e) {
+        } catch (IndexOutOfBoundsException e) {
             throw new PlaylistEmptyException();
         }
     }
-    
+
     public PlaylistPlayableListener getListener() {
         return listener;
     }
@@ -97,15 +97,20 @@ public class MusicMachinePlaylist {
     public MMStatus getStatus() {
         return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd);
     }
-    
-    public class PlaylistFullException extends RuntimeException {}
-    public class PlaylistEmptyException extends RuntimeException {}
+
+    public class PlaylistFullException extends RuntimeException {
+    }
+
+    public class PlaylistEmptyException extends RuntimeException {
+    }
 
     public interface PlaylistPlayableListener {
-        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist);
+        public void trackAddedToEmptyPlaylist(MMTrack track);
     }
-    public class PlaylistPlayableAdapter implements PlaylistPlayableListener{
-        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist) {}
+
+    public class PlaylistPlayableAdapter implements PlaylistPlayableListener {
+        public void trackAddedToEmptyPlaylist(MMTrack track) {
+        }
     }
 
 }

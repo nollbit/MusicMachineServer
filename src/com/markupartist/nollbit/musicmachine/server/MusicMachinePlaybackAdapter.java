@@ -16,12 +16,8 @@ import java.util.concurrent.TimeoutException;
  * To change this template use File | Settings | File Templates.
  */
 public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements MusicMachinePlaylist.PlaylistPlayableListener {
-    public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist) {
-        try {
-            this.playTrack(playlist.popTrack());
-        } catch (MusicMachinePlaylist.PlaylistEmptyException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
+    public void trackAddedToEmptyPlaylist(MMTrack track) {
+        this.playTrack(track);
     }
 
     @Override
@@ -42,7 +38,7 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
     private void playTrack(MMTrack track) {
         System.out.println("Playing track: " + track.toString());
         try {
-            MusicMachineApplication.jotify.play(track.getJotifyTrack(), 0 , this);
+            MusicMachineApplication.jotify.play(track.getJotifyTrack(), 0, this);
         } catch (TimeoutException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (LineUnavailableException e) {
