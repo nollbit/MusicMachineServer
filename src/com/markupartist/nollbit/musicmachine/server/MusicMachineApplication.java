@@ -8,11 +8,8 @@ import de.felixbruns.jotify.api.Jotify;
 import de.felixbruns.jotify.api.JotifyConnection;
 import de.felixbruns.jotify.api.exceptions.AuthenticationException;
 import de.felixbruns.jotify.api.exceptions.ConnectionException;
-import de.felixbruns.jotify.api.media.Track;
 import de.felixbruns.jotify.api.media.User;
-import de.felixbruns.jotify.api.player.PlaybackAdapter;
 
-import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -120,25 +117,7 @@ public class MusicMachineApplication {
         server.start();
         System.out.println("Server started on port " + port);
 
-        playlist.setListener(new MusicMachinePlaylist.PlaylistPlayableListener() {
-
-            public void playlistItemAdded(MusicMachinePlaylist playlist) {
-                try {
-                    Track track = playlist.popTrack().getJotifyTrack();
-
-                    String trackInfo = String.format("%s - %s (%s)", track.getArtist().getName(), track.getTitle(), track.getAlbum().getName());
-                    System.out.println("Playing track: " + trackInfo);
-
-                    jotify.play(track, 0, pbAdapter);
-                } catch (TimeoutException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (LineUnavailableException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                } catch (IOException e) {
-                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-                }
-            }
-        });
+        playlist.setListener(pbAdapter);
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
 

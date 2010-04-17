@@ -4,7 +4,6 @@ import com.markupartist.nollbit.musicmachine.server.model.MMStatus;
 import com.markupartist.nollbit.musicmachine.server.model.MMTrack;
 import de.felixbruns.jotify.api.media.Track;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -42,7 +41,7 @@ public class MusicMachinePlaylist {
         tracks.add(track);
 
         if (tracks.size() == 1 && listener != null) {
-            listener.playlistItemAdded(this);
+            listener.trackAddedToEmptyPlaylist(this);
         }
 
         return true;
@@ -54,18 +53,18 @@ public class MusicMachinePlaylist {
                 tracks.remove(t);
             }
         }
-
     }
 
     public boolean isEmpty() {
         return tracks.isEmpty();
     }
 
-    public MMTrack popTrack() {
-        if (this.isEmpty())
-            return null;
-
-        return tracks.get(0);
+    public MMTrack popTrack() throws PlaylistEmptyException {
+        try {
+            return tracks.remove(0);
+        } catch(IndexOutOfBoundsException e) {
+            throw new PlaylistEmptyException();
+        }
     }
     
     public PlaylistPlayableListener getListener() {
@@ -99,13 +98,14 @@ public class MusicMachinePlaylist {
         return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd);
     }
     
-    public class PlaylistFullException extends Exception {}
+    public class PlaylistFullException extends RuntimeException {}
+    public class PlaylistEmptyException extends RuntimeException {}
 
     public interface PlaylistPlayableListener {
-        public void playlistItemAdded(MusicMachinePlaylist playlist);
+        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist);
     }
     public class PlaylistPlayableAdapter implements PlaylistPlayableListener{
-        public void playlistItemAdded(MusicMachinePlaylist playlist) {}
+        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist) {}
     }
 
 }
