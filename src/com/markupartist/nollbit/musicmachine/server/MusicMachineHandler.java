@@ -1,16 +1,21 @@
 package com.markupartist.nollbit.musicmachine.server;
 
+import com.google.gson.Gson;
+import com.markupartist.nollbit.musicmachine.server.json.GeneralObjectDeserializer;
 import com.sun.net.httpserver.Headers;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import de.felixbruns.jotify.gateway.util.URIUtilities;
-import org.json.JSONException;
-import org.json.XML;
 
 import java.io.*;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
+
+class Params {
+    String key;
+    String value;
+}
 
 /**
  * Created by IntelliJ IDEA.
@@ -20,6 +25,9 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 abstract public class MusicMachineHandler implements HttpHandler {
+    Gson gson = GeneralObjectDeserializer.generalGson;
+
+    @SuppressWarnings("unchecked")
     public void handle(HttpExchange exchange) throws IOException {
         /* Get request method and query. */
         String requestMethod = exchange.getRequestMethod();
@@ -32,21 +40,16 @@ abstract public class MusicMachineHandler implements HttpHandler {
             params = URIUtilities.parseQuery(requestQuery);
         }
         else if(requestMethod.equalsIgnoreCase("POST")){
-            InputStream input   = exchange.getRequestBody();
-            BufferedReader reader  = new BufferedReader(new InputStreamReader(input));
-            StringBuilder  builder = new StringBuilder();
-            String         line;
-
-            /* Convert input stream to string. */
-            while((line = reader.readLine()) != null){
-                builder.append(line);
+            InputStream input = null;
+            try {
+                input = exchange.getRequestBody();
+                params = (Map<String, String>) GeneralObjectDeserializer.fromJson(new InputStreamReader(input));
+            } finally {
+                /* Close input stream. */
+                if(input != null) {
+                    input.close();
+                }
             }
-
-            /* Close input stream. */
-            input.close();
-
-            /* Parse query. */
-            params = URIUtilities.parseQuery(builder.toString());
         }
 
         /* Get response body and headers. */
