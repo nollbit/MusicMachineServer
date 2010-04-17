@@ -124,8 +124,12 @@ public class MusicMachineApplication {
 
             public void playlistItemAdded(MusicMachinePlaylist playlist) {
                 try {
-                    System.out.println("Playing track");
-                    jotify.play(playlist.popTrack().getJotifyTrack(), 0, pbAdapter);
+                    Track track = playlist.popTrack().getJotifyTrack();
+
+                    String trackInfo = String.format("%s - %s (%s)", track.getArtist().getName(), track.getTitle(), track.getAlbum().getName());
+                    System.out.println("Playing track: " + trackInfo);
+
+                    jotify.play(track, 0, pbAdapter);
                 } catch (TimeoutException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 } catch (LineUnavailableException e) {
