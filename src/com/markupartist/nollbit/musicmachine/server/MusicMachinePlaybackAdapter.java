@@ -16,14 +16,16 @@ import java.util.concurrent.TimeoutException;
  * To change this template use File | Settings | File Templates.
  */
 public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements MusicMachinePlaylist.PlaylistPlayableListener {
-    public void trackAddedToEmptyPlaylist(MMTrack track) {
-        this.playTrack(track);
+    public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist) {
+        try {
+            this.playTrack(playlist.popTrack());
+        } catch (MusicMachinePlaylist.PlaylistEmptyException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
     }
 
     @Override
     public void playbackFinished(Track track) {
-        MusicMachineApplication.playlist.removeTrack(track);
-
         // move to next song
         try {
             this.playTrack(MusicMachineApplication.playlist.popTrack());

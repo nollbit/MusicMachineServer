@@ -41,7 +41,7 @@ public class MusicMachinePlaylist {
         tracks.add(track);
 
         if (tracks.size() == 1 && listener != null) {
-            listener.trackAddedToEmptyPlaylist(track);
+            listener.trackAddedToEmptyPlaylist(this);
         }
 
         return true;
@@ -105,11 +105,11 @@ public class MusicMachinePlaylist {
     }
 
     public interface PlaylistPlayableListener {
-        public void trackAddedToEmptyPlaylist(MMTrack track);
+        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist);
     }
 
     public class PlaylistPlayableAdapter implements PlaylistPlayableListener {
-        public void trackAddedToEmptyPlaylist(MMTrack track) {
+        public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist) {
         }
     }
 
