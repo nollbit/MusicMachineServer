@@ -64,4 +64,8 @@ public class MMTrack {
     public void setTitle(String title) {
         this.title = title;
     }
+
+    public String toString() {
+        return String.format("%s - %s (%s)", this.jotifyTrack.getArtist().getName(), this.jotifyTrack.getTitle(), this.jotifyTrack.getAlbum().getName());
+    }
 }
