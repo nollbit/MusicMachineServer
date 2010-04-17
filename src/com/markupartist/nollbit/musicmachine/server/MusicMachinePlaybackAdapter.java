@@ -22,6 +22,8 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
 
     @Override
     public void playbackFinished(Track track) {
+        MusicMachineApplication.playlist.removeTrack(track);
+
         // move to next song
         try {
             this.playTrack(MusicMachineApplication.playlist.popTrack());
