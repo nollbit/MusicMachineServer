@@ -46,9 +46,4 @@ public class PlaylistHandler extends MusicMachineHandler {
 
         return "ok";
     }
-
-    @Override
-    public String handlePut(Map<String, String> params) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
-    }
 }

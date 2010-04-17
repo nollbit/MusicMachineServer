@@ -1,5 +1,6 @@
 package com.markupartist.nollbit.musicmachine.server;
 
+import com.markupartist.nollbit.musicmachine.server.model.MMStatus;
 import com.markupartist.nollbit.musicmachine.server.model.MMTrack;
 import de.felixbruns.jotify.api.media.Track;
 
@@ -20,6 +21,9 @@ public class MusicMachinePlaylist {
     private PlaylistPlayableListener listener;
 
     CopyOnWriteArrayList<MMTrack> tracks = new CopyOnWriteArrayList<MMTrack>();
+
+    private int playingTrackPlaytime;
+    private int timeUntilAdd;
 
     public List<MMTrack> getPlaylist() {
         return tracks;
@@ -72,6 +76,29 @@ public class MusicMachinePlaylist {
         this.listener = listener;
     }
 
+    public int getPlayingTrackPlaytime() {
+        return playingTrackPlaytime;
+    }
+
+    public void setPlayingTrackPlaytime(int playingTrackPlaytime) {
+        this.playingTrackPlaytime = playingTrackPlaytime;
+
+        // calculate time until we allow adding to the playlist
+        this.timeUntilAdd = this.getTotalPlayingTime() - playingTrackPlaytime;
+    }
+
+    public int getTotalPlayingTime() {
+        int playingTime = 0;
+        for (MMTrack t : tracks) {
+            playingTime += t.getLength();
+        }
+        return playingTime;
+    }
+
+    public MMStatus getStatus() {
+        return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd);
+    }
+    
     public class PlaylistFullException extends Exception {}
 
     public interface PlaylistPlayableListener {

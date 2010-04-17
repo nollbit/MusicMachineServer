@@ -2,6 +2,7 @@ package com.markupartist.nollbit.musicmachine.server;
 
 import com.markupartist.nollbit.musicmachine.server.handlers.ContentHandler;
 import com.markupartist.nollbit.musicmachine.server.handlers.PlaylistHandler;
+import com.markupartist.nollbit.musicmachine.server.handlers.StatusHandler;
 import com.sun.net.httpserver.HttpServer;
 import de.felixbruns.jotify.api.Jotify;
 import de.felixbruns.jotify.api.JotifyConnection;
@@ -11,6 +12,7 @@ import de.felixbruns.jotify.api.media.Track;
 import de.felixbruns.jotify.api.media.User;
 import de.felixbruns.jotify.api.player.PlaybackAdapter;
 
+import javax.sound.sampled.LineUnavailableException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -80,8 +82,9 @@ public class MusicMachineApplication {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         /* Set up content handlers. */
-        server.createContext("/",       new ContentHandler());
+        server.createContext("/",               new ContentHandler());
         server.createContext("/playlist",       new PlaylistHandler());
+        server.createContext("/status",         new StatusHandler());
 
         /* Set executor for server threads. */
         server.setExecutor(executor);
@@ -94,8 +97,25 @@ public class MusicMachineApplication {
             public void playlistItemAdded(MusicMachinePlaylist playlist) {
                 try {
                     System.out.println("Playing track");
-                    jotify.play(playlist.popTrack().getJotifyTrack(), pbAdapter);
+                    jotify.play(playlist.popTrack().getJotifyTrack(), 0, pbAdapter);
                 } catch (TimeoutException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (LineUnavailableException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                } catch (IOException e) {
+                    e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+                }
+            }
+        });
+
+        Runtime.getRuntime().addShutdownHook(new Thread() {
+
+            @Override
+            public void run() {
+                System.out.println("Shutting down...");
+                try {
+                    jotify.close();
+                } catch (ConnectionException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }

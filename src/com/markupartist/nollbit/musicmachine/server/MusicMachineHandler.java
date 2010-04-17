@@ -109,9 +109,15 @@ abstract public class MusicMachineHandler implements HttpHandler {
         responseBody.close();
     }
 
-    public abstract String handleGet(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException;
-    public abstract String handlePost(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException;
-    public abstract String handlePut(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException;
+    public String handleGet(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException {
+        throw new BadRequestException("Not implemented");
+    }
+    public String handlePost(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException {
+        throw new BadRequestException("Not implemented");
+    }
+    public String handlePut(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException {
+        throw new BadRequestException("Not implemented");
+    }
 
     public class BadRequestException extends Exception {
         public BadRequestException(String message) {
