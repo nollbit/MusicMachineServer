@@ -55,15 +55,38 @@ public class MusicMachineApplication {
 
     /* Main thread to listen for client connections. */
     public static void main(String[] args) throws IOException {
+        String username = null;
+        String password = null;
         int port = 8080;
 
-        if(args.length == 1){
-            port = Integer.parseInt(args[0]);
+        int i = 0;
+        while (i < args.length && args[i].startsWith("-")) {
+            String arg = args[i++];
+            if (arg.equals("-u")) {
+                if (i < args.length)
+                    username = args[i++];
+                else
+                    System.err.println("-u requires a username");
+            } else if (arg.equals("-p")) {
+                if (i < args.length)
+                    password = args[i++];
+                else
+                    System.err.println("-p requires a password");
+            } else if (arg.equals("-p")) {
+                if (i < args.length)
+                    port = Integer.parseInt(args[i++]);
+            }
         }
+
+        if (username == null || password == null) {
+            System.err.println("Usage: -u <username> -p <password> [-P <port>]");
+            System.exit(0);
+        }
+
 
         /* Login to spotify */
         try {
-            jotify.login("user", "password");
+            jotify.login(username, password);
             user = jotify.user();
         } catch (ConnectionException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
