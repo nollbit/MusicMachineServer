@@ -1,6 +1,7 @@
 package com.markupartist.nollbit.musicmachine.server;
 
 import com.markupartist.nollbit.musicmachine.server.model.MMTrack;
+import de.felixbruns.jotify.api.media.File;
 import de.felixbruns.jotify.api.media.Track;
 import de.felixbruns.jotify.api.player.PlaybackAdapter;
 
@@ -28,6 +29,7 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
     public void playbackFinished(Track track) {
         // move to next song
         try {
+            MusicMachineApplication.playlist.removeTrack(track);
             this.playTrack(MusicMachineApplication.playlist.popTrack());
         } catch (MusicMachinePlaylist.PlaylistEmptyException e) {
             System.out.println("No more tracks to play, waiting for new ones");
@@ -42,7 +44,7 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
     private void playTrack(MMTrack track) {
         System.out.println("Playing track: " + track.toString());
         try {
-            MusicMachineApplication.jotify.play(track.getJotifyTrack(), 0, this);
+            MusicMachineApplication.jotify.play(track.getJotifyTrack(), File.BITRATE_160, this);
         } catch (TimeoutException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (LineUnavailableException e) {

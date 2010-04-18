@@ -61,7 +61,7 @@ public class MusicMachinePlaylist {
 
     public MMTrack popTrack() throws PlaylistEmptyException {
         try {
-            return tracks.remove(0);
+            return tracks.get(0);
         } catch (IndexOutOfBoundsException e) {
             throw new PlaylistEmptyException();
         }

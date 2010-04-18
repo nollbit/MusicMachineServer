@@ -1,5 +1,25 @@
 <html>
+<head>
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js" charset="UTF-8" ></script>
+    <script type="text/javascript" src="jquery.timers-1.2.js" charset="UTF-8" ></script>
+    <script type="text/javascript" src="musicmachine.js" charset="UTF-8" ></script>
+    <link rel="stylesheet" href="screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link rel="stylesheet" href="musicmachine.css" type="text/css" media="screen, projection">
+
+</head>
 <body>
-Hello!
+<div class="container">
+    <h1>Current Playlist</h1>
+    <ol id="playlist" ></ol>
+    <h1>Current song</h1>
+    <div>
+        <span id="artist" ></span>
+        <span id="title" ></span>
+        <span id="played" ></span>
+        <span id="length" ></span>
+    </div>
+</div>
 </body>
 </html>
