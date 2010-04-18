@@ -3,7 +3,7 @@ musicmachine = function() {
 
         loadPlaylist : function() {
             jQuery.getJSON('/playlist', function(data, textStatus) {
-                if (data.length > 0) {
+                if (data) {
                     $("#title").text(data[0].title);
                     $("#artist").text(data[0].artist);
                     $("#length").text(musicmachine.textifyLength(data[0].length));
