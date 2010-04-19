@@ -3,6 +3,7 @@ package com.markupartist.nollbit.musicmachine.server;
 import com.markupartist.nollbit.musicmachine.server.handlers.ContentHandler;
 import com.markupartist.nollbit.musicmachine.server.handlers.PlaylistHandler;
 import com.markupartist.nollbit.musicmachine.server.handlers.StatusHandler;
+import com.markupartist.nollbit.musicmachine.server.handlers.VoteHandler;
 import com.sun.net.httpserver.HttpServer;
 import de.felixbruns.jotify.api.Jotify;
 import de.felixbruns.jotify.api.JotifyConnection;
@@ -14,6 +15,8 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
@@ -37,9 +40,12 @@ public class MusicMachineApplication {
     public static ExecutorService executor;
     public static Jotify jotify;
     public static MusicMachinePlaylist playlist;
+    public static MusicMachineElector elector;
 
     private static MusicMachinePlaybackAdapter pbAdapter;
     private static User user;
+
+    private static Timer kickOffTimer = new Timer();
 
     /* Statically create session map and executor for sessions. */
     static {
@@ -48,6 +54,7 @@ public class MusicMachineApplication {
         jotify = new JotifyConnection();
         playlist = new MusicMachinePlaylist();
         pbAdapter = new MusicMachinePlaybackAdapter();
+        elector = new MusicMachineElector();
     }
 
     /* Main thread to listen for client connections. */
@@ -109,6 +116,7 @@ public class MusicMachineApplication {
         server.createContext("/",               new ContentHandler());
         server.createContext("/playlist",       new PlaylistHandler());
         server.createContext("/status",         new StatusHandler());
+        server.createContext("/vote",           new VoteHandler());
 
         /* Set executor for server threads. */
         server.setExecutor(executor);
@@ -118,6 +126,23 @@ public class MusicMachineApplication {
         System.out.println("Server started on port " + port);
 
         playlist.setListener(pbAdapter);
+
+        elector.setListener(new MusicMachineElector.ElectionListener() {
+            public void voteAdded(String trackUri, String userId) {
+                System.out.println(String.format("Vote added: %s by %s", trackUri, userId));
+                // if playlist is empty, draw a winner in 30 seconds
+                if (playlist.isEmpty()) {
+                    System.out.println("Playlist is empty, drawing winner in 30 seconds");
+                    kickOffTimer.schedule(new TimerTask() {
+                        @Override
+                        public void run() {
+                            pbAdapter.addWinnersToPlaylist();
+                        }
+                    }, 30*1000);
+                    
+                }
+            }
+        });
 
         Runtime.getRuntime().addShutdownHook(new Thread() {
 

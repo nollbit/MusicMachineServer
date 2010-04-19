@@ -67,6 +67,10 @@ public class MusicMachinePlaylist {
         }
     }
 
+    public int countAvailableSpots() {
+        return MAX_TRACKS - tracks.size();
+    }
+
     public PlaylistPlayableListener getListener() {
         return listener;
     }
