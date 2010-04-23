@@ -1,0 +1,13 @@
+body {
+    background-color: black;
+    color: white;
+}
+
+#playlist {
+    font-size: 2em;
+    height: 300px;
+}
+
+.artist-info {
+    font-size: 4em;
+}

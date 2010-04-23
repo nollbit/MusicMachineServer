@@ -68,4 +68,9 @@ public class MMTrack {
     public String toString() {
         return String.format("%s - %s (%s)", this.jotifyTrack.getArtist().getName(), this.jotifyTrack.getTitle(), this.jotifyTrack.getAlbum().getName());
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        return obj instanceof MMTrack && (((MMTrack) obj).getId().equals(this.id));
+    }
 }

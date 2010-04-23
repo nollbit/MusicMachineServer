@@ -4,6 +4,7 @@ import com.markupartist.nollbit.musicmachine.server.model.MMStatus;
 import com.markupartist.nollbit.musicmachine.server.model.MMTrack;
 import de.felixbruns.jotify.api.media.Track;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CopyOnWriteArrayList;
 
@@ -21,6 +22,8 @@ public class MusicMachinePlaylist {
 
     CopyOnWriteArrayList<MMTrack> tracks = new CopyOnWriteArrayList<MMTrack>();
 
+    List<MMTrack> playedTracks = new ArrayList<MMTrack>();
+
     private int playingTrackPlaytime;
     private int timeUntilAdd;
 
@@ -28,16 +31,21 @@ public class MusicMachinePlaylist {
         return tracks;
     }
 
-    public boolean addTrack(Track track) throws PlaylistFullException {
+    public boolean addTrack(Track track) throws PlaylistFullException, TrackAlreadyAddedException {
         MMTrack mmTrack = new MMTrack(track);
         addTrack(mmTrack);
         return true;
     }
 
-    public boolean addTrack(MMTrack track) throws PlaylistFullException {
+    public boolean addTrack(MMTrack track) throws PlaylistFullException, TrackAlreadyAddedException {
         if (tracks.size() >= MAX_TRACKS) {
             throw new PlaylistFullException();
         }
+
+        if (playedTracks.contains(track) || tracks.contains(track)) {
+            throw new TrackAlreadyAddedException();
+        }
+
         tracks.add(track);
 
         if (tracks.size() == 1 && listener != null) {
@@ -50,6 +58,7 @@ public class MusicMachinePlaylist {
     public void removeTrack(Track track) {
         for (MMTrack t : tracks) {
             if (t.getId() == track.getId()) {
+                playedTracks.add(t);
                 tracks.remove(t);
             }
         }
@@ -107,6 +116,10 @@ public class MusicMachinePlaylist {
 
     public class PlaylistEmptyException extends RuntimeException {
     }
+
+    public class TrackAlreadyAddedException extends RuntimeException {
+    }
+
 
     public interface PlaylistPlayableListener {
         public void trackAddedToEmptyPlaylist(MusicMachinePlaylist playlist);

@@ -29,10 +29,10 @@ public class PlaylistHandler extends MusicMachineHandler {
 
     @Override
     public String handlePost(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException{
-        if (!params.containsKey("id"))
-            throw new BadRequestException("Missing param 'id'");
+        if (!params.containsKey("track"))
+            throw new BadRequestException("Missing param 'track'");
 
-        String trackId = params.get("id");
+        String trackId = params.get("track");
 
         try {
             Track track = MusicMachineApplication.jotify.browseTrack(trackId);
@@ -42,6 +42,8 @@ public class PlaylistHandler extends MusicMachineHandler {
             throw new InternalServerErrorException("Timeout occurred while getting track information");
         } catch (MusicMachinePlaylist.PlaylistFullException e) {
             throw new ConflictException("Playlist full");
+        } catch (MusicMachinePlaylist.TrackAlreadyAddedException e) {
+            throw new ConflictException("Track has already been added");
         } catch (IllegalArgumentException e) {
             return e.toString();
         }
