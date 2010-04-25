@@ -108,7 +108,7 @@ public class MusicMachinePlaylist {
     }
 
     public MMStatus getStatus() {
-        return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd);
+        return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd, 0);
     }
 
     public class PlaylistFullException extends RuntimeException {

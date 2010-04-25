@@ -70,7 +70,9 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
                 try {
                     votedTrack = MusicMachineApplication.jotify.browseTrack(uri);
                     MusicMachineApplication.playlist.addTrack(votedTrack);
-                } catch (TimeoutException e) {
+                } catch (MusicMachinePlaylist.TrackAlreadyAddedException e) {
+                    System.out.println("Can't add track - already added or played");
+                } catch (Exception e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
             }

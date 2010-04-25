@@ -10,10 +10,12 @@ package com.markupartist.nollbit.musicmachine.server.model;
 public class MMStatus {
     private int playtime;
     private int timeUntilAdd;
+    private int numVotes;
 
-    public MMStatus(int playtime, int timeUntilAdd) {
+    public MMStatus(int playtime, int timeUntilAdd, int numVotes) {
         this.playtime = playtime;
         this.timeUntilAdd = timeUntilAdd;
+        this.numVotes = numVotes;
     }
 
     public int getPlaytime() {
@@ -30,5 +32,13 @@ public class MMStatus {
 
     public void setTimeUntilAdd(int timeUntilAdd) {
         this.timeUntilAdd = timeUntilAdd;
+    }
+
+    public int getNumVotes() {
+        return numVotes;
+    }
+
+    public void setNumVotes(int numVotes) {
+        this.numVotes = numVotes;
     }
 }

@@ -1,26 +1,45 @@
 <html>
 <head>
-    <script type="text/javascript" src="http://code.jquery.com/jquery-1.4.2.min.js" charset="UTF-8" ></script>
-    <script type="text/javascript" src="jquery.timers-1.2.js" charset="UTF-8" ></script>
-    <script type="text/javascript" src="musicmachine.js" charset="UTF-8" ></script>
-    <link rel="stylesheet" href="screen.css" type="text/css" media="screen, projection">
-    <link rel="stylesheet" href="print.css" type="text/css" media="print">
-    <!--[if lt IE 8]><link rel="stylesheet" href="ie.css" type="text/css" media="screen, projection"><![endif]-->
-    <link rel="stylesheet" href="musicmachine.css" type="text/css" media="screen, projection">
+
+    <script type="text/javascript" src="js/jquery-1.4.2.min.js" charset="UTF-8" ></script>
+    <script type="text/javascript" src="js/jquery-ui-1.8.custom.min.js"></script>
+    <script type="text/javascript" src="js/jquery.timers-1.2.js" charset="UTF-8" ></script>
+    <script type="text/javascript" src="js/musicmachine.js" charset="UTF-8" ></script>
+    <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
+    <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
+    <!--[if lt IE 8]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
+    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.custom.css" rel="stylesheet" />
+    <link rel="stylesheet" href="css/musicmachine.css" type="text/css" media="screen, projection">
 
 </head>
 <body>
 <div class="container">
-    <ol id="playlist" ></ol>
-    <div id="current-track">
-        <span class="artist-info" id="artist" ></span>
-        <span class="artist-info"> - </span>
-        <span class="artist-info" id="title" ></span>
-        <br />
-        <span class="artist-info" id="played" ></span>
-        <span class="artist-info"> (</span>
-        <span class="artist-info" id="length" ></span>
-        <span class="artist-info">)</span>
+    <div id="playlist-container" class="span-12">
+        <ol id="playlist" ></ol>
+    </div>
+    <div id="action-container" class="span-12 last">
+        <div id="votes">
+            No. of votes: <span id="votecount">0</span>
+        </div>
+        <div id="add">
+            <textarea rows="5" cols="30" name="uris" id="uris"></textarea>
+            <br />
+            <a id="playlist-add" href="#">Add to playlist</a>
+            <a id="playlist-vote" href="#">Vote (with random users)</a>
+        </div>
+    </div>
+    <div class="span-24 last">
+        <div id="current-track">
+            <span class="artist-info" id="artist" >Artist</span>
+            <span class="artist-info"> - </span>
+            <span class="artist-info" id="title" >Track Title</span>
+            <br />
+            <div id="progressbar"></div>
+
+
+            <span class="artist-info" id="played" >0:00</span>
+            <span class="artist-info" id="length" >0:00</span>
+        </div>
     </div>
 </div>
 </body>

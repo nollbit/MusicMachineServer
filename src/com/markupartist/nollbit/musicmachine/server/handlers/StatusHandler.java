@@ -3,6 +3,7 @@ package com.markupartist.nollbit.musicmachine.server.handlers;
 import com.google.gson.Gson;
 import com.markupartist.nollbit.musicmachine.server.MusicMachineApplication;
 import com.markupartist.nollbit.musicmachine.server.MusicMachineHandler;
+import com.markupartist.nollbit.musicmachine.server.model.MMStatus;
 
 import java.util.Map;
 
@@ -18,6 +19,8 @@ public class StatusHandler extends MusicMachineHandler {
 
     @Override
     public String handleGet(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException {
-        return gson.toJson(MusicMachineApplication.playlist.getStatus());
+        MMStatus status = MusicMachineApplication.playlist.getStatus();
+        status.setNumVotes(MusicMachineApplication.elector.getNumVotes());
+        return gson.toJson(status);
     }
 }

@@ -55,6 +55,10 @@ public class MusicMachineElector {
         return winners;
     }
 
+    public synchronized int getNumVotes() {
+        return voters.size();
+    }
+
     public ElectionListener getListener() {
         return listener;
     }
