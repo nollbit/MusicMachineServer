@@ -28,11 +28,11 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
 
     @Override
     public void playbackFinished(Track track) {
-        addWinnersToPlaylist();
         // move to next song
         try {
             MusicMachineApplication.playlist.removeTrack(track);
             this.playTrack(MusicMachineApplication.playlist.popTrack());
+            addWinnersToPlaylist();
 
         } catch (MusicMachinePlaylist.PlaylistEmptyException e) {
             System.out.println("No more tracks to play, waiting for new ones");

@@ -1,14 +1,17 @@
 body {
-    background-color: gray;
+    background-color: black;
+    color: white;
 }
 
 #playlist {
+    margin: 1em;
     font-size: 2em;
     height: 300px;
+    border-right: 4px solid gray;
 }
 
 .artist-info {
-    font-size: 4em;
+    font-size: 3em;
 }
 
 #uris.dragover {
@@ -21,4 +24,26 @@ body {
 
 #length {
     display: none;
+}
+
+#votes {
+    text-align: center;
+    padding: 10px;
+}
+
+#votecount {
+    font-size: 10em;
+}
+
+.explanation {
+    text-align: justify;
+    font-size: 1.5em;
+}
+
+#add {
+    margin-top: 100px;
+}
+
+a {
+    color: white;
 }

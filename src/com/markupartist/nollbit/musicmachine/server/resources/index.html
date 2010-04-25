@@ -8,24 +8,21 @@
     <link rel="stylesheet" href="css/screen.css" type="text/css" media="screen, projection">
     <link rel="stylesheet" href="css/print.css" type="text/css" media="print">
     <!--[if lt IE 8]><link rel="stylesheet" href="css/ie.css" type="text/css" media="screen, projection"><![endif]-->
-    <link type="text/css" href="css/ui-lightness/jquery-ui-1.8.custom.css" rel="stylesheet" />
+    <link type="text/css" href="css/ui-darkness/jquery-ui-1.8.custom.css" rel="stylesheet" />
     <link rel="stylesheet" href="css/musicmachine.css" type="text/css" media="screen, projection">
 
 </head>
 <body>
 <div class="container">
-    <div id="playlist-container" class="span-12">
+    <div id="playlist-container" class="span-19">
         <ol id="playlist" ></ol>
     </div>
-    <div id="action-container" class="span-12 last">
+    <div id="action-container" class="span-5 last">
         <div id="votes">
-            No. of votes: <span id="votecount">0</span>
-        </div>
-        <div id="add">
-            <textarea rows="5" cols="30" name="uris" id="uris"></textarea>
-            <br />
-            <a id="playlist-add" href="#">Add to playlist</a>
-            <a id="playlist-vote" href="#">Vote (with random users)</a>
+            <span id="votecount">0</span>
+            <div class="explanation">
+                This is the number of votes! Voting ends at the end of each song.
+            </div>
         </div>
     </div>
     <div class="span-24 last">
@@ -36,9 +33,16 @@
             <br />
             <div id="progressbar"></div>
 
-
             <span class="artist-info" id="played" >0:00</span>
             <span class="artist-info" id="length" >0:00</span>
+        </div>
+    </div>
+    <div class="span-24 last">
+        <div id="add">
+            <textarea rows="5" cols="30" name="uris" id="uris"></textarea>
+            <br />
+            <a id="playlist-add" href="#">Add to playlist</a>
+            <a id="playlist-vote" href="#">Vote (with random users)</a>
         </div>
     </div>
 </div>
