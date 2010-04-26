@@ -12,6 +12,11 @@ body {
 
 .artist-info {
     font-size: 3em;
+    color: #C3D9FF;
+}
+
+.artist-info#title {
+    font-weight: bold;
 }
 
 #uris.dragover {
@@ -32,7 +37,8 @@ body {
 }
 
 #votecount {
-    font-size: 10em;
+    font-size: 8em;
+    color: #C3D9FF;
 }
 
 .explanation {

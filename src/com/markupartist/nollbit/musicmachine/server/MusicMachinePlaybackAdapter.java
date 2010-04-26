@@ -31,8 +31,8 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
         // move to next song
         try {
             MusicMachineApplication.playlist.removeTrack(track);
-            this.playTrack(MusicMachineApplication.playlist.popTrack());
             addWinnersToPlaylist();
+            this.playTrack(MusicMachineApplication.playlist.popTrack());
 
         } catch (MusicMachinePlaylist.PlaylistEmptyException e) {
             System.out.println("No more tracks to play, waiting for new ones");
