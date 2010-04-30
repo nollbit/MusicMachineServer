@@ -1,9 +1,6 @@
 package com.markupartist.nollbit.musicmachine.server;
 
-import com.markupartist.nollbit.musicmachine.server.handlers.ContentHandler;
-import com.markupartist.nollbit.musicmachine.server.handlers.PlaylistHandler;
-import com.markupartist.nollbit.musicmachine.server.handlers.StatusHandler;
-import com.markupartist.nollbit.musicmachine.server.handlers.VoteHandler;
+import com.markupartist.nollbit.musicmachine.server.handlers.*;
 import com.sun.net.httpserver.HttpServer;
 import de.felixbruns.jotify.api.Jotify;
 import de.felixbruns.jotify.api.JotifyConnection;
@@ -127,6 +124,7 @@ public class MusicMachineApplication {
         server.createContext("/playlist",       new PlaylistHandler());
         server.createContext("/status",         new StatusHandler());
         server.createContext("/vote",           new VoteHandler());
+        server.createContext("/control",        new ControlHandler());
 
         /* Set executor for server threads. */
         server.setExecutor(executor);

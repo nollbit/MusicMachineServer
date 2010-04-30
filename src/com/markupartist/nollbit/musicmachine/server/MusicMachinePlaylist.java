@@ -25,16 +25,15 @@ public class MusicMachinePlaylist {
     List<MMTrack> playedTracks = new ArrayList<MMTrack>();
 
     private int playingTrackPlaytime;
-    private int timeUntilAdd;
 
     public List<MMTrack> getPlaylist() {
         return tracks;
     }
 
-    public boolean addTrack(Track track) throws PlaylistFullException, TrackAlreadyAddedException {
+    public MMTrack addTrack(Track track) throws PlaylistFullException, TrackAlreadyAddedException {
         MMTrack mmTrack = new MMTrack(track);
         addTrack(mmTrack);
-        return true;
+        return mmTrack;
     }
 
     public boolean addTrack(MMTrack track) throws PlaylistFullException, TrackAlreadyAddedException {
@@ -94,9 +93,6 @@ public class MusicMachinePlaylist {
 
     public void setPlayingTrackPlaytime(int playingTrackPlaytime) {
         this.playingTrackPlaytime = playingTrackPlaytime;
-
-        // calculate time until we allow adding to the playlist
-        this.timeUntilAdd = this.getTotalPlayingTime() - playingTrackPlaytime;
     }
 
     public int getTotalPlayingTime() {
@@ -113,6 +109,10 @@ public class MusicMachinePlaylist {
             timeUntilVote = tracks.get(0).getLength() - this.playingTrackPlaytime;
         }
         return new MMStatus(this.playingTrackPlaytime, timeUntilVote, 0);
+    }
+
+    public List<MMTrack> getPreviousTracks() {
+        return playedTracks;
     }
 
     public class PlaylistFullException extends RuntimeException {

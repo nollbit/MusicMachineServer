@@ -7,6 +7,7 @@ import com.markupartist.nollbit.musicmachine.server.MusicMachinePlaylist;
 import com.markupartist.nollbit.musicmachine.server.model.MMTrack;
 import de.felixbruns.jotify.api.media.Track;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeoutException;
@@ -23,7 +24,24 @@ public class PlaylistHandler extends MusicMachineHandler {
 
     @Override
     public String handleGet(Map<String, String> params) {
-        List<MMTrack> tracks = MusicMachineApplication.playlist.getPlaylist();
+        List<MMTrack> tracks;
+        int limit = 10;
+        if (params.containsKey("p") && params.get("p").equalsIgnoreCase("played"))
+        {
+            tracks = MusicMachineApplication.playlist.getPreviousTracks();
+            Collections.reverse(tracks);
+        }
+        else
+        {
+            tracks = MusicMachineApplication.playlist.getPlaylist();
+        }
+
+        if (limit > tracks.size())
+        {
+            limit = tracks.size() + 1;
+        }
+        tracks = tracks.subList(0, limit - 1);
+
         return gson.toJson(tracks);
     }
 
@@ -34,9 +52,10 @@ public class PlaylistHandler extends MusicMachineHandler {
 
         String trackId = params.get("track");
 
+        MMTrack addedTrack;
         try {
             Track track = MusicMachineApplication.jotify.browseTrack(trackId);
-            MusicMachineApplication.playlist.addTrack(track);
+            addedTrack = MusicMachineApplication.playlist.addTrack(track);
         } catch (TimeoutException e) {
             System.err.println("Timeout occurred while getting track information");
             throw new InternalServerErrorException("Timeout occurred while getting track information");
@@ -48,6 +67,6 @@ public class PlaylistHandler extends MusicMachineHandler {
             return e.toString();
         }
 
-        return "ok";
+        return addedTrack.getId();
     }
 }

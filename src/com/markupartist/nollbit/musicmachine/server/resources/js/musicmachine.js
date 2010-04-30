@@ -87,6 +87,11 @@ musicmachine = function() {
 
             });
         },
+        next : function() {
+            jQuery.post("/control", '{"action": "next"}', function(data, resultString) {
+                //alert("Added: " + data);
+            });
+        },
     }
 }();
 

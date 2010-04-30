@@ -7,6 +7,10 @@ $(document).ready(function() {
         musicmachine.add();
     });
 
+    $("#next").click(function() {
+        musicmachine.next();
+    });
+
     // Set up the drop zone.
     $('#uris')
 
