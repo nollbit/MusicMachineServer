@@ -108,6 +108,16 @@ public class MusicMachineApplication {
             System.err.println("Unable to login to spotify, check stacks");
             return;
         }
+        /* Check if user is premium. */
+        if(!user.isPremium()){
+            try {
+                jotify.close();
+            } catch (ConnectionException e) {
+                e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            }
+            System.err.println("You need a premium account :) byebye");
+            return;
+        }
 
         /* Create a HTTP server that listens for connections on port 8080 or the given port. */
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);

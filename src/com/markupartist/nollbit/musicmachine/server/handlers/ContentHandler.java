@@ -54,7 +54,7 @@ public class ContentHandler implements HttpHandler {
         String extension   = resource.substring(resource.lastIndexOf('.') + 1);
         String contentType = contentTypes.get(extension);
 
-        System.out.format("GET %s\n", resource);
+        //System.out.format("GET %s\n", resource);
 
         /* Get resource as stream. */
         InputStream stream = MusicMachineApplication.class.getResourceAsStream(resource);
