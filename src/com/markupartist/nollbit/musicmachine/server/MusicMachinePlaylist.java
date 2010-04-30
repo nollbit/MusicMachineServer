@@ -108,7 +108,11 @@ public class MusicMachinePlaylist {
     }
 
     public MMStatus getStatus() {
-        return new MMStatus(this.playingTrackPlaytime, this.timeUntilAdd, 0);
+        int timeUntilVote = 30000;
+        if (!tracks.isEmpty()) {
+            timeUntilVote = tracks.get(0).getLength() - this.playingTrackPlaytime;
+        }
+        return new MMStatus(this.playingTrackPlaytime, timeUntilVote, 0);
     }
 
     public class PlaylistFullException extends RuntimeException {
