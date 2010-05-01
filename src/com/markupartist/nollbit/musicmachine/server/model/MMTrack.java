@@ -13,6 +13,7 @@ public class MMTrack {
     private String id;
     private String artist;
     private String title;
+    private String album;
     private String uri;
     private int length;
 
@@ -22,6 +23,7 @@ public class MMTrack {
         id = track.getId();
         artist = track.getArtist().getName();
         title = track.getTitle();
+        album = track.getAlbum().getName();
         length = track.getLength();
         uri = track.getLink().asString();
         jotifyTrack = track;
@@ -73,6 +75,14 @@ public class MMTrack {
 
     public void setUri(String uri) {
         this.uri = uri;
+    }
+
+    public String getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(String album) {
+        this.album = album;
     }
 
     public String toString() {
