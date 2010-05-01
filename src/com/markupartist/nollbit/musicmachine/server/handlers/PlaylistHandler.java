@@ -24,6 +24,7 @@ public class PlaylistHandler extends MusicMachineHandler {
 
     @Override
     public String handleGet(Map<String, String> params) {
+        //System.out.println("Got request to GET /playlist");
         List<MMTrack> tracks;
         int limit = 10;
         if (params.containsKey("p") && params.get("p").equalsIgnoreCase("played"))
@@ -42,6 +43,7 @@ public class PlaylistHandler extends MusicMachineHandler {
         }
         tracks = tracks.subList(0, limit - 1);
 
+        //System.out.println("Done with request to GET /playlist");
         return gson.toJson(tracks);
     }
 

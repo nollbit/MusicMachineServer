@@ -47,9 +47,17 @@ public class MusicMachinePlaybackAdapter extends PlaybackAdapter implements Musi
     private void playTrack(MMTrack track) {
         System.out.println("Playing track: " + track.toString());
         try {
-            MusicMachineApplication.jotify.play(track.getJotifyTrack(), File.BITRATE_160, this);
-        } catch (TimeoutException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            int attempts = 0;
+            while (attempts < 10)
+            {
+                try {
+                    MusicMachineApplication.jotify.play(track.getJotifyTrack(), File.BITRATE_160, this);
+                    attempts = 10;
+                } catch (TimeoutException e) {
+                    System.err.println("Timeout from spotify :(");
+                }
+                attempts++;
+            }
         } catch (LineUnavailableException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IOException e) {
