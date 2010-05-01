@@ -55,6 +55,5 @@ a {
 }
 
 #playlist-container {
-background-image: url(weblogo.png);
-background-position: bottom left;
+background: #000 url(weblogo.png) bottom left no-repåeat;
 }
