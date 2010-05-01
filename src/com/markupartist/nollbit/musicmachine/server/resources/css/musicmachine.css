@@ -53,3 +53,8 @@ body {
 a {
     color: white;
 }
+
+.playlist-container {
+background-image: url(weblogo.png);
+background-position: bottom left;
+}
