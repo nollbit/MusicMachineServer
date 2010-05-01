@@ -54,7 +54,7 @@ a {
     color: white;
 }
 
-.playlist-container {
+#playlist-container {
 background-image: url(weblogo.png);
 background-position: bottom left;
 }
