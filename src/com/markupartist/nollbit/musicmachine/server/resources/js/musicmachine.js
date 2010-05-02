@@ -92,6 +92,14 @@ musicmachine = function() {
                 //alert("Added: " + data);
             });
         },
+        clientSetup : function() {
+            jQuery.getJSON('/setup/', function(data, textStatus) {
+                qr = $("<img>").attr("src", "http://chart.apis.google.com/chart?cht=qr&chs=230x230&chl=" + data);
+                $("#server-uri")
+                        .append(qr)
+                        .append($("<p>").text(data));
+            });
+        },
     }
 }();
 

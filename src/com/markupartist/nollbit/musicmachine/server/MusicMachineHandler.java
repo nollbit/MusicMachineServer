@@ -8,6 +8,7 @@ import com.sun.net.httpserver.HttpHandler;
 import de.felixbruns.jotify.gateway.util.URIUtilities;
 
 import java.io.*;
+import java.net.InetSocketAddress;
 import java.nio.charset.Charset;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,11 +26,14 @@ class Params {
  * To change this template use File | Settings | File Templates.
  */
 abstract public class MusicMachineHandler implements HttpHandler {
+    HttpExchange httpExchange;
     Gson gson = GeneralObjectDeserializer.generalGson;
 
     @SuppressWarnings("unchecked")
     public void handle(HttpExchange exchange) throws IOException {
         /* Get request method and query. */
+        httpExchange = exchange;
+
         String requestMethod = exchange.getRequestMethod();
         String requestQuery  = exchange.getRequestURI().getQuery();
 
@@ -136,5 +140,13 @@ abstract public class MusicMachineHandler implements HttpHandler {
         public ConflictException(String message) {
             super(message);
         }
+    }
+
+    /**
+     * Get the encapsulated HTTP request received and the response in one exchange.
+     * @return the httpExchange
+     */
+    public HttpExchange getHttpExchange() {
+        return httpExchange;
     }
 }

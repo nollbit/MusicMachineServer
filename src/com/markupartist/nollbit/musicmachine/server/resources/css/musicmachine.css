@@ -55,5 +55,10 @@ a {
 }
 
 #playlist-container {
-background: #000 url(weblogo.png) bottom left no-repeat;
+    background: #000 url(weblogo.png) bottom left no-repeat;
+}
+
+#server-uri {
+    margin-top: 50px;
+    text-align: center;
 }

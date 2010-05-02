@@ -125,6 +125,7 @@ public class MusicMachineApplication {
         server.createContext("/status",         new StatusHandler());
         server.createContext("/vote",           new VoteHandler());
         server.createContext("/control",        new ControlHandler());
+        server.createContext("/setup/",          new SetupHandler());
 
         /* Set executor for server threads. */
         server.setExecutor(executor);
