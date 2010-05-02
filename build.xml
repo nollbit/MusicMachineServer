@@ -1,0 +1,52 @@
+<?xml version="1.0"?>
+<project name="MusicMachineServer" default="compile">
+    <!-- Parts of this file is borrowed from the Jotify api_split fork. Thanks! -->
+	<description>
+    Build file for MusicMachineServer.
+  </description>
+	<!-- set properties for this build -->
+	<property environment="env"/>
+	<property name="src.dir" location="src"/>
+	<property name="build.dir" location="build"/>
+	<property name="lib.dir" location="lib"/>
+	<path id="build.classpath">
+		<fileset dir="${lib.dir}">
+			<include name="**/*.jar"/>
+		</fileset>
+	</path>
+	<target name="init">
+		<tstamp/>
+		<mkdir dir="${build.dir}"/>
+	</target>
+	<!-- deletes class files -->
+	<target name="clean" description="clean up all generated files">
+		<delete dir="${build.dir}"/>
+	</target>
+	<target name="compile" depends="init" description="compile the source">
+		<javac srcdir="${src.dir}" destdir="${build.dir}">
+			<classpath refid="build.classpath"/>
+		</javac>
+		<copy todir="${build.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/resources/**"/>
+			</fileset>
+		</copy>
+	</target>
+	<target name="jar" depends="compile">
+		<pathconvert property="jar.classpath" pathsep=" ">
+			<path refid="build.classpath"/>
+			<chainedmapper>
+				<flattenmapper/>
+				<globmapper from="*" to="lib/*"/>
+			</chainedmapper>
+		</pathconvert>
+		<jar destfile="musicmachine.jar">
+			<fileset dir="${build.dir}">
+			</fileset>
+			<manifest>
+				<attribute name="Class-Path" value="${jar.classpath}"/>
+                <attribute name="Main-Class" value="com.markupartist.nollbit.musicmachine.server.MusicMachineApplication"/>
+			</manifest>
+		</jar>
+	</target>
+</project>
