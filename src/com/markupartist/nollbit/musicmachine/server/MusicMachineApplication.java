@@ -8,6 +8,8 @@ import de.felixbruns.jotify.api.exceptions.AuthenticationException;
 import de.felixbruns.jotify.api.exceptions.ConnectionException;
 import de.felixbruns.jotify.api.media.User;
 
+import javax.jmdns.JmDNS;
+import javax.jmdns.ServiceInfo;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
@@ -38,6 +40,7 @@ public class MusicMachineApplication {
     public static Jotify jotify;
     public static MusicMachinePlaylist playlist;
     public static MusicMachineElector elector;
+    public static JmDNS jmdns;
 
     private static MusicMachinePlaybackAdapter pbAdapter;
     private static User user;
@@ -52,6 +55,13 @@ public class MusicMachineApplication {
         playlist = new MusicMachinePlaylist();
         pbAdapter = new MusicMachinePlaybackAdapter();
         elector = new MusicMachineElector();
+        try {
+            jmdns = JmDNS.create();
+        } catch (IOException e) {
+            System.err.println("Unable to start JmDNS");
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+
     }
 
     /* Main thread to listen for client connections. */
@@ -133,6 +143,9 @@ public class MusicMachineApplication {
         /* Start HTTP server. */
         server.start();
         System.out.println("Server started on port " + port);
+
+        jmdns.registerService(ServiceInfo.create("_http._tcp.local.", "MusicMachine", port, 0, 0, "path=/"));
+
 
         playlist.setListener(pbAdapter);
 
