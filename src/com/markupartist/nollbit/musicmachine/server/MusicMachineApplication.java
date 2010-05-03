@@ -173,6 +173,7 @@ public class MusicMachineApplication {
                 System.out.println("Shutting down...");
                 try {
                     jotify.close();
+                    jmdns.close();
                 } catch (ConnectionException e) {
                     e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
                 }
