@@ -154,14 +154,8 @@ public class MusicMachineApplication {
                 System.out.println(String.format("Vote added: %s by %s", trackUri, userId));
                 // if playlist is empty, draw a winner in 30 seconds
                 if (playlist.isEmpty() && elector.getNumVotes() == 1) {
-                    System.out.println("Playlist is empty, drawing winner in 30 seconds");
-                    kickOffTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            pbAdapter.addWinnersToPlaylist();
-                        }
-                    }, 30*1000);
-                    
+                    System.out.println("Playlist is empty. Playing immediately.");
+                    pbAdapter.addWinnersToPlaylist();
                 }
             }
         });
