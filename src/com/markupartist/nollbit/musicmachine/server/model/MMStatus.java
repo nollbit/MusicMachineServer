@@ -11,11 +11,13 @@ public class MMStatus {
     private int playtime;
     private int timeUntilVote;
     private int numVotes;
+    private boolean hasVoted;
 
-    public MMStatus(int playtime, int timeUntilVote, int numVotes) {
+    public MMStatus(int playtime, int timeUntilVote, int numVotes, boolean hasVoted) {
         this.playtime = playtime;
         this.timeUntilVote = timeUntilVote;
         this.numVotes = numVotes;
+        this.hasVoted = hasVoted;
     }
 
     public int getPlaytime() {
@@ -40,5 +42,13 @@ public class MMStatus {
 
     public void setNumVotes(int numVotes) {
         this.numVotes = numVotes;
+    }
+
+    public boolean hasVoted() {
+        return hasVoted;
+    }
+
+    public void setHasVoted(boolean hasVoted) {
+        this.hasVoted = hasVoted;
     }
 }

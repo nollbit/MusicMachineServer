@@ -21,6 +21,11 @@ public class StatusHandler extends MusicMachineHandler {
     public String handleGet(Map<String, String> params) throws BadRequestException, InternalServerErrorException, ConflictException {
         MMStatus status = MusicMachineApplication.playlist.getStatus();
         status.setNumVotes(MusicMachineApplication.elector.getNumVotes());
+
+        if (params.containsKey("user")) {
+            status.setHasVoted(MusicMachineApplication.elector.hasVoted(params.get("user")));
+        }
+
         return gson.toJson(status);
     }
 }

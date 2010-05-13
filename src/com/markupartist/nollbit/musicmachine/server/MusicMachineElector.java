@@ -45,7 +45,7 @@ public class MusicMachineElector {
             }
         });
         for (Iterator it = list.iterator(); it.hasNext();) {
-            Map.Entry entry = (Map.Entry)it.next();
+            Map.Entry entry = (Map.Entry) it.next();
             if (winners.size() < numWinners) {
                 winners.add(entry.getKey());
             }
@@ -59,6 +59,10 @@ public class MusicMachineElector {
         return voters.size();
     }
 
+    public synchronized boolean hasVoted(String userId) {
+        return voters.contains(userId);
+    }
+
     public ElectionListener getListener() {
         return listener;
     }
@@ -67,7 +71,8 @@ public class MusicMachineElector {
         this.listener = listener;
     }
 
-    public class UserHasAlreadyVotedException extends Exception {}
+    public class UserHasAlreadyVotedException extends Exception {
+    }
 
     public interface ElectionListener {
         public void voteAdded(String trackUri, String userId);
