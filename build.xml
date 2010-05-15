@@ -43,6 +43,8 @@
             <zipfileset src="${lib.dir}/jotify-gateway.jar" includes="**/*.class"/>
             <zipfileset src="${lib.dir}/tritonus_jorbis-0.3.6.jar" includes="**/*.class"/>
             <zipfileset src="${lib.dir}/tritonus_share-0.3.6.jar" includes="**/*.class"/>
+            <zipfileset src="${lib.dir}/json.jar" includes="**/*.class"/>
+            <zipfileset src="${lib.dir}/last.fm-bindings.jar" includes="**/*.class"/>
         </copy>
 
         <mkdir dir="${dest.dir}" />
