@@ -35,13 +35,11 @@
 	<target name="jar" depends="compile">
 		<pathconvert property="jar.classpath" pathsep=" ">
 			<path refid="build.classpath"/>
-			<chainedmapper>
-				<flattenmapper/>
-				<globmapper from="*" to="lib/*"/>
-			</chainedmapper>
 		</pathconvert>
 		<jar destfile="musicmachine.jar">
 			<fileset dir="${build.dir}">
+			</fileset>
+            <fileset dir="${lib.dir}">
 			</fileset>
 			<manifest>
 				<attribute name="Class-Path" value="${jar.classpath}"/>
