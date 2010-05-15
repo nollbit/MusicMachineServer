@@ -104,7 +104,7 @@ public class MusicMachinePlaylist {
     }
 
     public MMStatus getStatus() {
-        int timeUntilVote = 5000;
+        int timeUntilVote = -5000;
         if (!tracks.isEmpty()) {
             timeUntilVote = tracks.get(0).getLength() - this.playingTrackPlaytime;
         }
