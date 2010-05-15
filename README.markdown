@@ -1,6 +1,6 @@
 # Music Machine
 
-Music Machine is a Java web server that uses [Spotify](http://spotify.com) to provide a playlist with a maximum of 5 tracks that it plays through in order.
+Music Machine is a Java server that plays music using a [Spotify](http://spotify.com) playlist, which contains a maximum of 5 tracks. A [web frontend](MusicMachineServer/raw/master/screenhots/music-machine-web.png) is provided which shows currently playing track and upcoming playlist.
 
 __Music Machine requires a Spotify Premium account to function.__
 
