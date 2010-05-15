@@ -11,6 +11,7 @@ import de.felixbruns.jotify.api.media.User;
 import javax.jmdns.JmDNS;
 import javax.jmdns.ServiceInfo;
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
@@ -68,7 +69,7 @@ public class MusicMachineApplication {
     public static void main(String[] args) throws IOException {
         String username = null;
         String password = null;
-        int port = 8080;
+        int port = 6170;
 
         int i = 0;
         while (i < args.length && args[i].startsWith("-")) {
@@ -142,7 +143,9 @@ public class MusicMachineApplication {
 
         /* Start HTTP server. */
         server.start();
-        System.out.println("Server started on port " + port);
+
+        InetAddress addr = InetAddress.getLocalHost();
+        System.out.println("Server started on [http://" + addr.getHostName() + ":" + port + "]");
 
         jmdns.registerService(ServiceInfo.create("_http._tcp.local.", "MusicMachine", port, 0, 0, "path=/"));
 
