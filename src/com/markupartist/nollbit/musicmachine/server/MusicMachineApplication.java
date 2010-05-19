@@ -84,19 +84,11 @@ public class MusicMachineApplication {
                     password = args[i++];
                 else
                     System.err.println("-p requires a password");
-            } else if (arg.equals("-P")) {
-                if (i < args.length)
-                    try {
-                        port = Integer.parseInt(args[i++]);
-                    } catch (NumberFormatException e) {
-                        System.err.println(String.format(
-                                "Port must be numeric, using default port %s instead.", port));
-                    }
             }
         }
 
         if (username == null || password == null) {
-            System.err.println("Usage: -u <username> -p <password> [-P <port>]");
+            System.err.println("Usage: -u <username> -p <password>");
             System.exit(0);
         }
 
