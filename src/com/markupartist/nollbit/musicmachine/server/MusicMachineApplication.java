@@ -16,19 +16,17 @@ import java.net.InetSocketAddress;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
-import java.util.TimerTask;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeoutException;
 
 /**
- *
  * PLEASE NOTE!
- *
+ * <p/>
  * Most of this code comes from the Gateway application from the Jotify distribution.
- *
+ * <p/>
  * So I take NO credit for this
- * 
+ * <p/>
  * Created by IntelliJ IDEA.
  * User: johanm
  * Date: Apr 14, 2010
@@ -49,6 +47,7 @@ public class MusicMachineApplication {
     private static Timer kickOffTimer = new Timer();
 
     /* Statically create session map and executor for sessions. */
+
     static {
         sessions = new HashMap<String, MusicMachineSession>();
         executor = Executors.newCachedThreadPool();
@@ -66,6 +65,7 @@ public class MusicMachineApplication {
     }
 
     /* Main thread to listen for client connections. */
+
     public static void main(String[] args) throws IOException {
         String username = null;
         String password = null;
@@ -117,7 +117,7 @@ public class MusicMachineApplication {
             return;
         }
         /* Check if user is premium. */
-        if(!user.isPremium()){
+        if (!user.isPremium()) {
             try {
                 jotify.close();
             } catch (ConnectionException e) {
@@ -131,12 +131,12 @@ public class MusicMachineApplication {
         HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
 
         /* Set up content handlers. */
-        server.createContext("/",               new ContentHandler());
-        server.createContext("/playlist",       new PlaylistHandler());
-        server.createContext("/status",         new StatusHandler());
-        server.createContext("/vote",           new VoteHandler());
-        server.createContext("/control",        new ControlHandler());
-        server.createContext("/setup/",          new SetupHandler());
+        server.createContext("/", new ContentHandler());
+        server.createContext("/playlist", new PlaylistHandler());
+        server.createContext("/status", new StatusHandler());
+        server.createContext("/vote", new VoteHandler());
+        server.createContext("/control", new ControlHandler());
+        server.createContext("/setup/", new SetupHandler());
 
         /* Set executor for server threads. */
         server.setExecutor(executor);
@@ -147,8 +147,15 @@ public class MusicMachineApplication {
         InetAddress addr = InetAddress.getLocalHost();
         System.out.println("Server started on [http://" + addr.getHostName() + ":" + port + "]");
 
-        jmdns.registerService(ServiceInfo.create("_http._tcp.local.", "MusicMachine", port, 0, 0, "path=/"));
+        String computerName = "MusicMachine";
+        String[] hostNameParts = addr.getHostName().split("\\.");
+        if (hostNameParts.length > 1) {
+            computerName = hostNameParts[hostNameParts.length - 2];
+        } else if (hostNameParts.length == 1) {
+            computerName = hostNameParts[0];
+        }
 
+        jmdns.registerService(ServiceInfo.create("_http._tcp.local.", computerName, port, 10, 10, "path=/"));
 
         playlist.setListener(pbAdapter);
 
