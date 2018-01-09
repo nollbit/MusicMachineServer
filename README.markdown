@@ -38,4 +38,4 @@ Music Machine requires Java 6 JRE to be on the machine used for playback. A pre-
 5. All done
 
 ## Screenshot
-![Alt text](MusicMachineServer/raw/master/screenhots/music-machine-web.png "Web")
+![Alt text](https://raw.githubusercontent.com/nollbit/MusicMachineServer/master/screenhots/music-machine-web.png "Web")
